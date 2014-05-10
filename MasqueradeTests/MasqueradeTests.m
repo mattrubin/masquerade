@@ -6,11 +6,13 @@
 //  Copyright (c) 2014 Matt Rubin. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
+@import XCTest;
+
 
 @interface MasqueradeTests : XCTestCase
 
 @end
+
 
 @implementation MasqueradeTests
 

@@ -6,7 +6,8 @@
 //  Copyright (c) 2014 Matt Rubin. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+
 
 @interface MSQAppDelegate : UIResponder <UIApplicationDelegate>
 
