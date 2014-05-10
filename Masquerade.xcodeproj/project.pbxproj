@@ -80,9 +80,8 @@
 		C9B93217191EB9380046FF02 /* Masquerade */ = {
 			isa = PBXGroup;
 			children = (
-				C9B93220191EB9380046FF02 /* MSQAppDelegate.h */,
-				C9B93221191EB9380046FF02 /* MSQAppDelegate.m */,
-				C9B93223191EB9380046FF02 /* Images.xcassets */,
+				C9C571AA191ED69F009FDB2E /* Source */,
+				C9C571A9191ED623009FDB2E /* Assets */,
 				C9B93218191EB9380046FF02 /* Supporting Files */,
 			);
 			path = Masquerade;
@@ -104,6 +103,23 @@
 				C9B93236191EB9390046FF02 /* MasqueradeTests.m */,
 			);
 			path = MasqueradeTests;
+			sourceTree = "<group>";
+		};
+		C9C571A9191ED623009FDB2E /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				C9B93223191EB9380046FF02 /* Images.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		C9C571AA191ED69F009FDB2E /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				C9B93220191EB9380046FF02 /* MSQAppDelegate.h */,
+				C9B93221191EB9380046FF02 /* MSQAppDelegate.m */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 		C9E5740B191ECB4E00865E93 /* Docs */ = {
