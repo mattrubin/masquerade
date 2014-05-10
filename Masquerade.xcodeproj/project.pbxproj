@@ -10,14 +10,12 @@
 		C9B93212191EB9380046FF02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9B93211191EB9380046FF02 /* Foundation.framework */; };
 		C9B93214191EB9380046FF02 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9B93213191EB9380046FF02 /* CoreGraphics.framework */; };
 		C9B93216191EB9380046FF02 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9B93215191EB9380046FF02 /* UIKit.framework */; };
-		C9B9321C191EB9380046FF02 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9B9321A191EB9380046FF02 /* InfoPlist.strings */; };
 		C9B9321E191EB9380046FF02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B9321D191EB9380046FF02 /* main.m */; };
 		C9B93222191EB9380046FF02 /* MSQAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B93221191EB9380046FF02 /* MSQAppDelegate.m */; };
 		C9B93224191EB9380046FF02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9B93223191EB9380046FF02 /* Images.xcassets */; };
 		C9B9322B191EB9390046FF02 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9B9322A191EB9390046FF02 /* XCTest.framework */; };
 		C9B9322C191EB9390046FF02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9B93211191EB9380046FF02 /* Foundation.framework */; };
 		C9B9322D191EB9390046FF02 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9B93215191EB9380046FF02 /* UIKit.framework */; };
-		C9B93235191EB9390046FF02 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9B93233191EB9390046FF02 /* InfoPlist.strings */; };
 		C9B93237191EB9390046FF02 /* MasqueradeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B93236191EB9390046FF02 /* MasqueradeTests.m */; };
 /* End PBXBuildFile section */
 
@@ -37,7 +35,6 @@
 		C9B93213191EB9380046FF02 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		C9B93215191EB9380046FF02 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C9B93219191EB9380046FF02 /* Masquerade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Masquerade-Info.plist"; sourceTree = "<group>"; };
-		C9B9321B191EB9380046FF02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C9B9321D191EB9380046FF02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C9B9321F191EB9380046FF02 /* Masquerade-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Masquerade-Prefix.pch"; sourceTree = "<group>"; };
 		C9B93220191EB9380046FF02 /* MSQAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSQAppDelegate.h; sourceTree = "<group>"; };
@@ -46,7 +43,6 @@
 		C9B93229191EB9390046FF02 /* MasqueradeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MasqueradeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9B9322A191EB9390046FF02 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		C9B93232191EB9390046FF02 /* MasqueradeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MasqueradeTests-Info.plist"; sourceTree = "<group>"; };
-		C9B93234191EB9390046FF02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C9B93236191EB9390046FF02 /* MasqueradeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasqueradeTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				C9B93219191EB9380046FF02 /* Masquerade-Info.plist */,
-				C9B9321A191EB9380046FF02 /* InfoPlist.strings */,
 				C9B9321D191EB9380046FF02 /* main.m */,
 				C9B9321F191EB9380046FF02 /* Masquerade-Prefix.pch */,
 			);
@@ -142,7 +137,6 @@
 			isa = PBXGroup;
 			children = (
 				C9B93232191EB9390046FF02 /* MasqueradeTests-Info.plist */,
-				C9B93233191EB9390046FF02 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -224,7 +218,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9B9321C191EB9380046FF02 /* InfoPlist.strings in Resources */,
 				C9B93224191EB9380046FF02 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -233,7 +226,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9B93235191EB9390046FF02 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,25 +275,6 @@
 			targetProxy = C9B9322E191EB9390046FF02 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		C9B9321A191EB9380046FF02 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C9B9321B191EB9380046FF02 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		C9B93233191EB9390046FF02 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C9B93234191EB9390046FF02 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C9B93238191EB9390046FF02 /* Debug */ = {
