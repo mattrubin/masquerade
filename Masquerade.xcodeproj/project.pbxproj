@@ -32,7 +32,6 @@
 		C9B93221191EB9380046FF02 /* MSQAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSQAppDelegate.m; sourceTree = "<group>"; };
 		C9B93223191EB9380046FF02 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C9B93229191EB9390046FF02 /* MasqueradeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MasqueradeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9B93232191EB9390046FF02 /* MasqueradeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MasqueradeTests-Info.plist"; sourceTree = "<group>"; };
 		C9B93236191EB9390046FF02 /* MasqueradeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasqueradeTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,17 +99,8 @@
 			isa = PBXGroup;
 			children = (
 				C9B93236191EB9390046FF02 /* MasqueradeTests.m */,
-				C9B93231191EB9390046FF02 /* Supporting Files */,
 			);
 			path = MasqueradeTests;
-			sourceTree = "<group>";
-		};
-		C9B93231191EB9390046FF02 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				C9B93232191EB9390046FF02 /* MasqueradeTests-Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -393,7 +383,6 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "MasqueradeTests/MasqueradeTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -411,7 +400,6 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Masquerade/Masquerade-Prefix.pch";
-				INFOPLIST_FILE = "MasqueradeTests/MasqueradeTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
