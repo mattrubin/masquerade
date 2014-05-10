@@ -33,6 +33,7 @@
 		C9B93223191EB9380046FF02 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C9B93229191EB9390046FF02 /* MasqueradeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MasqueradeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9B93236191EB9390046FF02 /* MasqueradeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasqueradeTests.m; sourceTree = "<group>"; };
+		C9E5740C191ECB7A00865E93 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +60,7 @@
 				C9B93217191EB9380046FF02 /* Masquerade */,
 				C9B93230191EB9390046FF02 /* MasqueradeTests */,
 				C9B9320F191EB9380046FF02 /* Products */,
+				C9E5740B191ECB4E00865E93 /* Docs */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -101,6 +103,14 @@
 				C9B93236191EB9390046FF02 /* MasqueradeTests.m */,
 			);
 			path = MasqueradeTests;
+			sourceTree = "<group>";
+		};
+		C9E5740B191ECB4E00865E93 /* Docs */ = {
+			isa = PBXGroup;
+			children = (
+				C9E5740C191ECB7A00865E93 /* LICENSE */,
+			);
+			name = Docs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
