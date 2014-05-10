@@ -2,4 +2,4 @@
 
 ## License
 
-This project is distributed under the terms of the MIT License. See the `LICENSE` file for more information.
+This project is distributed under the terms of the MIT License. See the [LICENSE](LICENSE) file for more information.
