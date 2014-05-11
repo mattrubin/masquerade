@@ -345,6 +345,7 @@
 					"-Weverything",
 					"-Wno-gnu",
 					"-Wno-objc-missing-property-synthesis",
+					"-Wno-assign-enum",
 				);
 			};
 			name = Debug;
@@ -416,6 +417,7 @@
 					"-Weverything",
 					"-Wno-gnu",
 					"-Wno-objc-missing-property-synthesis",
+					"-Wno-assign-enum",
 				);
 			};
 			name = Release;

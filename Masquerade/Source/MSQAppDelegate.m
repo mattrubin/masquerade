@@ -54,7 +54,6 @@
     NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     NSArray *cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies;
     for (NSHTTPCookie *cookie in cookies) {
-        NSLog(@"Deleting Cookie: %@", cookie);
         [cookieStorage deleteCookie:cookie];
     }
 
@@ -64,17 +63,64 @@
     // Wipe the Caches, Cookies, and Preferences directories
     NSArray *URLs = [[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask];
     for (NSURL *libraryURL in URLs) {
-        NSError *error;
-
         NSURL *cachesURL = [libraryURL URLByAppendingPathComponent:@"Caches" isDirectory:YES];
-        [[NSFileManager defaultManager] removeItemAtURL:cachesURL error:&error];
+        [self purgeDirectoryAtURL:cachesURL];
 
         NSURL *cookiesURL = [libraryURL URLByAppendingPathComponent:@"Cookies" isDirectory:YES];
-        [[NSFileManager defaultManager] removeItemAtURL:cookiesURL error:&error];
+        [self purgeDirectoryAtURL:cookiesURL];
 
         NSURL *preferencesURL = [libraryURL URLByAppendingPathComponent:@"Preferences" isDirectory:YES];
-        [[NSFileManager defaultManager] removeItemAtURL:preferencesURL error:&error];
+        [self purgeDirectoryAtURL:preferencesURL];
     }
+}
+
+- (BOOL)deleteDirectoryAtURL:(NSURL *)directoryURL
+{
+    NSError *error;
+    BOOL success = [[NSFileManager defaultManager] removeItemAtURL:directoryURL error:&error];
+
+    if (error) {
+        NSError *underlyingError = error.userInfo[NSUnderlyingErrorKey];
+        if ([underlyingError.domain isEqualToString:NSPOSIXErrorDomain]) {
+            switch (underlyingError.code) {
+                case 1: // Operation not permitted
+                    return [self purgeDirectoryAtURL:directoryURL];
+                case 2: // No such file or directory
+                    return YES; // Failing to delete a nonexistent directory is a kind of success
+                default:
+                    break;
+            }
+        }
+        NSLog(@"ERROR: %@", error);
+        NSLog(@"UNDERLYING ERROR: %@", underlyingError);
+    }
+
+    return success;
+}
+
+- (BOOL)purgeDirectoryAtURL:(NSURL *)directoryURL
+{
+    NSError *error;
+    NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:directoryURL
+                                                      includingPropertiesForKeys:nil
+                                                                         options:0
+                                                                           error:&error];
+    if (error) {
+        NSLog(@"ERROR PURGING DIRECTORY: %@", directoryURL);
+        NSLog(@"ERROR: %@", error);
+        return NO;
+    }
+
+    BOOL failed = NO;
+    for (NSURL *childURL in contents) {
+        BOOL success = [self deleteDirectoryAtURL:childURL];
+        if (!success) {
+            NSLog(@"FAILED TO DELETE: %@", childURL);
+            failed = YES;
+        }
+    }
+
+    return !failed;
 }
 
 @end
