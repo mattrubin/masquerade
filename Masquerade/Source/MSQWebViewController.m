@@ -35,6 +35,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
 - (void)loadView
 {
     self.webView = [[UIWebView alloc] init];
+    self.webView.scalesPageToFit = YES;
     self.webView.delegate = self;
     self.view = self.webView;
 }
