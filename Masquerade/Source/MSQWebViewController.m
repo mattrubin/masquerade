@@ -68,6 +68,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
 
     self.navigationController.toolbarHidden = NO;
     [self updateToolbarButtons];
+    [self updateURLField];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -85,6 +86,11 @@ static NSString * const DEFAULT_SCHEME = @"http";
 
 
 #pragma mark -
+
+- (void)updateURLField
+{
+    self.urlField.text = self.webView.request.URL.absoluteString;
+}
 
 - (void)updateToolbarButtons
 {
@@ -107,26 +113,34 @@ static NSString * const DEFAULT_SCHEME = @"http";
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    self.urlField.text = request.URL.absoluteString;
     [self updateToolbarButtons];
+
     NSLog(@"Should?  %@", request);
     return YES;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
+    [self updateURLField];
     [self updateToolbarButtons];
+
     NSLog(@"Loading: %@", webView.request);
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    [self updateURLField];
     [self updateToolbarButtons];
+
     NSLog(@"Loaded:  %@", webView.request);
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
+    [self updateURLField];
     [self updateToolbarButtons];
+
     NSLog(@"Failed:  %@", webView.request);
 }
 
