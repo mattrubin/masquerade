@@ -49,6 +49,32 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+
+    // Delete all cookies
+    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSArray *cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies;
+    for (NSHTTPCookie *cookie in cookies) {
+        NSLog(@"Deleting Cookie: %@", cookie);
+        [cookieStorage deleteCookie:cookie];
+    }
+
+    // Clear the cache
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+
+    // Wipe the Caches, Cookies, and Preferences directories
+    NSArray *URLs = [[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask];
+    for (NSURL *libraryURL in URLs) {
+        NSError *error;
+
+        NSURL *cachesURL = [libraryURL URLByAppendingPathComponent:@"Caches" isDirectory:YES];
+        [[NSFileManager defaultManager] removeItemAtURL:cachesURL error:&error];
+
+        NSURL *cookiesURL = [libraryURL URLByAppendingPathComponent:@"Cookies" isDirectory:YES];
+        [[NSFileManager defaultManager] removeItemAtURL:cookiesURL error:&error];
+
+        NSURL *preferencesURL = [libraryURL URLByAppendingPathComponent:@"Preferences" isDirectory:YES];
+        [[NSFileManager defaultManager] removeItemAtURL:preferencesURL error:&error];
+    }
 }
 
 @end
