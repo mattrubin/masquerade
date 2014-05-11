@@ -76,7 +76,9 @@ static NSString * const DEFAULT_SCHEME = @"http";
 {
     [super viewDidAppear:animated];
 
-    [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://duckduckgo.com"]]];
+    if (!self.webView.request) {
+        [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://duckduckgo.com"]]];
+    }
 }
 
 - (void)didReceiveMemoryWarning
