@@ -9,8 +9,12 @@
 #import "MSQWebViewController.h"
 
 
-@interface MSQWebViewController () <UIWebViewDelegate>
+static NSString * const DEFAULT_SCHEME = @"http";
 
+
+@interface MSQWebViewController () <UIWebViewDelegate, UITextFieldDelegate>
+
+@property (nonatomic, strong) UITextField *urlField;
 @property (nonatomic, strong) UIBarButtonItem *backButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *forwardButtonItem;
 
@@ -38,6 +42,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    // Set up navigation bar
+    self.urlField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
+    self.urlField.borderStyle = UITextBorderStyleRoundedRect;
+    self.urlField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    self.urlField.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.urlField.spellCheckingType = UITextSpellCheckingTypeNo;
+    self.urlField.keyboardType = UIKeyboardTypeURL;
+    self.urlField.returnKeyType = UIReturnKeyGo;
+    self.urlField.enablesReturnKeyAutomatically = YES;
+    self.urlField.delegate = self;
+    self.navigationItem.titleView = self.urlField;
 
     // Set up toolbar
     self.backButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(goBack)];
@@ -112,6 +128,20 @@
 {
     [self updateToolbarButtons];
     NSLog(@"Failed:  %@", webView.request);
+}
+
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSURLComponents *components = [NSURLComponents componentsWithString:textField.text];
+    if (!components.scheme) components.scheme = DEFAULT_SCHEME;
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:components.URL];
+    [self.webView loadRequest:request];
+
+    [textField resignFirstResponder];
+    return NO;
 }
 
 @end
