@@ -123,7 +123,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    [self updateURLField];
+    // We don't update the URL field here because webView.request might still hold the request for the previous page
     [self updateToolbarButtons];
 
     NSLog(@"Loading: %@", webView.request);
