@@ -17,7 +17,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
 
-    self.window.rootViewController = [MSQWebViewController new];
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MSQWebViewController new]];
 
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

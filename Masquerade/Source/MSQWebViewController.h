@@ -11,4 +11,6 @@
 
 @interface MSQWebViewController : UIViewController
 
+@property (nonatomic, strong) UIWebView *webView;
+
 @end

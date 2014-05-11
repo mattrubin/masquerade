@@ -9,7 +9,10 @@
 #import "MSQWebViewController.h"
 
 
-@interface MSQWebViewController ()
+@interface MSQWebViewController () <UIWebViewDelegate>
+
+@property (nonatomic, strong) UIBarButtonItem *backButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *forwardButtonItem;
 
 @end
 
@@ -25,10 +28,37 @@
     return self;
 }
 
+- (void)loadView
+{
+    self.webView = [[UIWebView alloc] init];
+    self.webView.delegate = self;
+    self.view = self.webView;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    // Set up toolbar
+    self.backButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(goBack)];
+    self.forwardButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(goForward)];
+    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    self.toolbarItems = @[flexibleSpace, self.backButtonItem, flexibleSpace, self.forwardButtonItem, flexibleSpace];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    self.navigationController.toolbarHidden = NO;
+    [self updateToolbarButtons];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://duckduckgo.com"]]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -37,15 +67,51 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+#pragma mark -
+
+- (void)updateToolbarButtons
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    self.backButtonItem.enabled = self.webView.canGoBack;
+    self.forwardButtonItem.enabled = self.webView.canGoForward;
 }
-*/
+
+- (void)goBack
+{
+    [self.webView goBack];
+}
+
+- (void)goForward
+{
+    [self.webView goForward];
+}
+
+
+#pragma mark - UIWebViewDelegate
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    [self updateToolbarButtons];
+    NSLog(@"Should?  %@", request);
+    return YES;
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [self updateToolbarButtons];
+    NSLog(@"Loading: %@", webView.request);
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self updateToolbarButtons];
+    NSLog(@"Loaded:  %@", webView.request);
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [self updateToolbarButtons];
+    NSLog(@"Failed:  %@", webView.request);
+}
 
 @end
