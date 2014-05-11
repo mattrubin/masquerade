@@ -10,6 +10,14 @@
 #import "MSQWebViewController.h"
 
 
+@interface MSQAppDelegate ()
+
+@property (nonatomic, strong) UIViewController *rootViewController;
+@property (nonatomic, strong) UIViewController *maskViewController;
+
+@end
+
+
 @implementation MSQAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -17,7 +25,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
 
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MSQWebViewController new]];
+    self.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MSQWebViewController new]];
+    self.window.rootViewController = self.rootViewController;
 
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -28,6 +37,9 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+
+    // Shown the mask in place of the browser to prevent snapshotting of the current web page
+    self.window.rootViewController = self.maskViewController;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -44,6 +56,8 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+
+    self.window.rootViewController = self.rootViewController;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
