@@ -15,6 +15,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
 @interface MSQWebViewController () <UIWebViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) UITextField *urlField;
+@property (nonatomic, strong) UIButton *stopButton;
 @property (nonatomic, strong) UIBarButtonItem *backButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *forwardButtonItem;
 
@@ -54,8 +55,14 @@ static NSString * const DEFAULT_SCHEME = @"http";
     self.urlField.returnKeyType = UIReturnKeyGo;
     self.urlField.enablesReturnKeyAutomatically = YES;
     self.urlField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    self.urlField.rightViewMode = UITextFieldViewModeUnlessEditing;
     self.urlField.delegate = self;
     self.navigationItem.titleView = self.urlField;
+
+    self.stopButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+    [self.stopButton setTitle:@"✖︎" forState:UIControlStateNormal];
+    [self.stopButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
+    [self.stopButton addTarget:self action:@selector(stopLoading) forControlEvents:UIControlEventTouchUpInside];
 
     // Set up toolbar
     self.backButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(goBack)];
@@ -101,6 +108,12 @@ static NSString * const DEFAULT_SCHEME = @"http";
     self.backButtonItem.enabled = webView.canGoBack;
     self.forwardButtonItem.enabled = webView.canGoForward;
     self.urlField.backgroundColor = webView.isLoading ? self.view.tintColor : [UIColor whiteColor];
+    self.urlField.rightView = webView.isLoading ? self.stopButton : nil;
+}
+
+- (void)stopLoading
+{
+    [self.webView stopLoading];
 }
 
 - (void)goBack
