@@ -145,7 +145,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
     self.urlField.text = request.URL.absoluteString;
     [self updateButtonsForWebView:webView];
 
-    NSLog(@"Should?  %@", request);
+    NSLog(@"Should Load? %@", request.URL);
     return YES;
 }
 
@@ -154,7 +154,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
     // We don't update the URL field here because webView.request might still hold the request for the previous page
     [self updateButtonsForWebView:webView];
 
-    NSLog(@"Loading: %@", webView.request);
+    NSLog(@"Loading...");
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
@@ -162,7 +162,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
     [self updateURLField];
     [self updateButtonsForWebView:webView];
 
-    NSLog(@"Loaded:  %@", webView.request);
+    NSLog(@"Loaded.");
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -170,7 +170,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
     [self updateURLField];
     [self updateButtonsForWebView:webView];
 
-    NSLog(@"Failed:  %@", webView.request);
+    NSLog(@"Failed: %@ (%@)", error.localizedDescription, error.userInfo[NSURLErrorFailingURLErrorKey]);
 }
 
 
