@@ -69,7 +69,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
     [super viewWillAppear:animated];
 
     self.navigationController.toolbarHidden = NO;
-    [self updateToolbarButtons];
+    [self updateButtonsForWebView:self.webView];
     [self updateURLField];
 }
 
@@ -96,10 +96,11 @@ static NSString * const DEFAULT_SCHEME = @"http";
     self.urlField.text = self.webView.request.URL.absoluteString;
 }
 
-- (void)updateToolbarButtons
+- (void)updateButtonsForWebView:(UIWebView *)webView
 {
-    self.backButtonItem.enabled = self.webView.canGoBack;
-    self.forwardButtonItem.enabled = self.webView.canGoForward;
+    self.backButtonItem.enabled = webView.canGoBack;
+    self.forwardButtonItem.enabled = webView.canGoForward;
+    self.urlField.backgroundColor = webView.isLoading ? self.view.tintColor : [UIColor whiteColor];
 }
 
 - (void)goBack
@@ -118,7 +119,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     self.urlField.text = request.URL.absoluteString;
-    [self updateToolbarButtons];
+    [self updateButtonsForWebView:webView];
 
     NSLog(@"Should?  %@", request);
     return YES;
@@ -127,7 +128,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     // We don't update the URL field here because webView.request might still hold the request for the previous page
-    [self updateToolbarButtons];
+    [self updateButtonsForWebView:webView];
 
     NSLog(@"Loading: %@", webView.request);
 }
@@ -135,7 +136,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [self updateURLField];
-    [self updateToolbarButtons];
+    [self updateButtonsForWebView:webView];
 
     NSLog(@"Loaded:  %@", webView.request);
 }
@@ -143,7 +144,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [self updateURLField];
-    [self updateToolbarButtons];
+    [self updateButtonsForWebView:webView];
 
     NSLog(@"Failed:  %@", webView.request);
 }
