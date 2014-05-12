@@ -16,6 +16,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
 
 @property (nonatomic, strong) UITextField *urlField;
 @property (nonatomic, strong) UIButton *stopButton;
+@property (nonatomic, strong) UIButton *reloadButton;
 @property (nonatomic, strong) UIBarButtonItem *backButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *forwardButtonItem;
 
@@ -64,6 +65,11 @@ static NSString * const DEFAULT_SCHEME = @"http";
     [self.stopButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
     [self.stopButton addTarget:self action:@selector(stopLoading) forControlEvents:UIControlEventTouchUpInside];
 
+    self.reloadButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+    [self.reloadButton setTitle:@"↻" forState:UIControlStateNormal];
+    [self.reloadButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
+    [self.reloadButton addTarget:self action:@selector(reload) forControlEvents:UIControlEventTouchUpInside];
+
     // Set up toolbar
     self.backButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(goBack)];
     self.forwardButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(goForward)];
@@ -108,12 +114,17 @@ static NSString * const DEFAULT_SCHEME = @"http";
     self.backButtonItem.enabled = webView.canGoBack;
     self.forwardButtonItem.enabled = webView.canGoForward;
     self.urlField.backgroundColor = webView.isLoading ? self.view.tintColor : [UIColor whiteColor];
-    self.urlField.rightView = webView.isLoading ? self.stopButton : nil;
+    self.urlField.rightView = webView.isLoading ? self.stopButton : self.reloadButton;
 }
 
 - (void)stopLoading
 {
     [self.webView stopLoading];
+}
+
+- (void)reload
+{
+    [self.webView reload];
 }
 
 - (void)goBack
