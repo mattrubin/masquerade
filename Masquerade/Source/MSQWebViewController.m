@@ -53,6 +53,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
     self.urlField.keyboardType = UIKeyboardTypeURL;
     self.urlField.returnKeyType = UIReturnKeyGo;
     self.urlField.enablesReturnKeyAutomatically = YES;
+    self.urlField.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.urlField.delegate = self;
     self.navigationItem.titleView = self.urlField;
 
