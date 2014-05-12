@@ -47,7 +47,8 @@ static NSString * const DEFAULT_SCHEME = @"http";
     [super viewDidLoad];
 
     // Set up navigation bar
-    self.urlField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
+    self.urlField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 300, 35)];
+    self.urlField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     self.urlField.borderStyle = UITextBorderStyleRoundedRect;
     self.urlField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.urlField.autocorrectionType = UITextAutocorrectionTypeNo;
