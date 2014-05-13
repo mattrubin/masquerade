@@ -179,7 +179,8 @@ static NSString * const DEFAULT_SCHEME = @"http";
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSURLComponents *components = [NSURLComponents componentsWithString:textField.text];
+    NSString *urlString = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)textField.text, NULL, NULL, kCFStringEncodingUTF8));
+    NSURLComponents *components = [NSURLComponents componentsWithString:urlString];
     if (!components.scheme) components.scheme = DEFAULT_SCHEME;
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:components.URL];
     [self.webView loadRequest:request];
