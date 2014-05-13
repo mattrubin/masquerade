@@ -143,7 +143,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    self.urlField.text = request.URL.absoluteString;
+    // We don't update the URL field here because the request might be for some widget embedded in the larger page
     [self updateButtonsForWebView:webView];
 
     NSLog(@"Should Load? %@", request.URL);
