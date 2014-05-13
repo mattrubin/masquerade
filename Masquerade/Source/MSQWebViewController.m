@@ -54,7 +54,7 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
     self.urlField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.urlField.autocorrectionType = UITextAutocorrectionTypeNo;
     self.urlField.spellCheckingType = UITextSpellCheckingTypeNo;
-    self.urlField.keyboardType = UIKeyboardTypeURL;
+    self.urlField.keyboardType = UIKeyboardTypeWebSearch;
     self.urlField.returnKeyType = UIReturnKeyGo;
     self.urlField.enablesReturnKeyAutomatically = YES;
     self.urlField.clearButtonMode = UITextFieldViewModeWhileEditing;
