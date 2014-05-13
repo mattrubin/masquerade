@@ -10,6 +10,7 @@
 
 
 static NSString * const DEFAULT_SCHEME = @"http";
+static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
 
 
 @interface MSQWebViewController () <UIWebViewDelegate, UITextFieldDelegate>
@@ -181,12 +182,30 @@ static NSString * const DEFAULT_SCHEME = @"http";
 {
     NSString *urlString = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)textField.text, NULL, NULL, kCFStringEncodingUTF8));
     NSURLComponents *components = [NSURLComponents componentsWithString:urlString];
+
+    // If no host is specified, treat this as a search
+    if (!components.host)
+        components = [self urlComponentsForSearch:textField.text]; // search for the unescaped string
+
+    // If no scheme has been specified, use HTTP
     if (!components.scheme) components.scheme = DEFAULT_SCHEME;
+
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:components.URL];
     [self.webView loadRequest:request];
 
     [textField resignFirstResponder];
     return NO;
+}
+
+- (NSURLComponents *)urlComponentsForSearch:(NSString *)searchString
+{
+    CFStringRef escapedString = CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                        (__bridge CFStringRef)(searchString),
+                                                                        NULL,
+                                                                        CFSTR(":/?#[]@!$&'()*+,;=%"),
+                                                                        kCFStringEncodingUTF8);
+
+    return [NSURLComponents componentsWithString:[NSString stringWithFormat:DEFAULT_SEARCH_FORMAT, CFBridgingRelease(escapedString)]];
 }
 
 @end
