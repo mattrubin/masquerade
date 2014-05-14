@@ -1,0 +1,13 @@
+language: objective-c
+
+xcode_project: Masquerade.xcodeproj
+xcode_scheme: Masquerade
+xcode_sdk:
+  - iphonesimulator7.0
+  - iphonesimulator7.1
+
+before_install:
+  - export LANG=en_US.UTF-8
+  - gem update cocoapods
+  - brew update
+  - brew upgrade xctool
