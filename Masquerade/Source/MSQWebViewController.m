@@ -7,6 +7,7 @@
 //
 
 #import "MSQWebViewController.h"
+#import "MSQURLInterpreter.h"
 
 
 static NSString * const DEFAULT_SCHEME = @"http";
@@ -180,7 +181,7 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSString *urlString = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)textField.text, NULL, NULL, kCFStringEncodingUTF8));
+    NSString *urlString = [MSQURLInterpreter urlStringFromInput:textField.text];
     NSURLComponents *components = [NSURLComponents componentsWithString:urlString];
 
     // If no host is specified, treat this as a search
