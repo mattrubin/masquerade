@@ -15,7 +15,7 @@
 {
     CFStringRef escapedString = CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                         (__bridge CFStringRef)input,
-                                                                        CFSTR("[]"),
+                                                                        CFSTR("#[]"),
                                                                         NULL,
                                                                         kCFStringEncodingUTF8);
     return CFBridgingRelease(escapedString);

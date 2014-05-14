@@ -44,6 +44,9 @@
                                 @"tel:+1-816-555-1212": @"tel:+1-816-555-1212",
                                 @"telnet://192.0.2.16:80/": @"telnet://192.0.2.16:80/",
                                 @"urn:oasis:names:specification:docbook:dtd:xml:4.1.2": @"urn:oasis:names:specification:docbook:dtd:xml:4.1.2",
+                                // Test special characters
+                                @"http://example.com/#test": @"http://example.com/#test",
+                                @"http://example.com/:/?#[]@!$&'()*+,;=": @"http://example.com/:/?#[]@!$&'()*+,;=",
                                 };
 
     for (NSString *input in testPairs) {
