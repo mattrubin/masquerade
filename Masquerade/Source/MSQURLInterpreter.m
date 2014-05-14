@@ -13,7 +13,11 @@
 
 + (NSString *)urlStringFromInput:(NSString *)input
 {
-    CFStringRef escapedString = CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)input, NULL, NULL, kCFStringEncodingUTF8);
+    CFStringRef escapedString = CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                        (__bridge CFStringRef)input,
+                                                                        CFSTR("[]"),
+                                                                        NULL,
+                                                                        kCFStringEncodingUTF8);
     return CFBridgingRelease(escapedString);
 }
 
