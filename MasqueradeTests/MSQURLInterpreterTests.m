@@ -47,6 +47,12 @@
                                 // Test special characters
                                 @"http://example.com/#test": @"http://example.com/#test",
                                 @"http://example.com/:/?#[]@!$&'()*+,;=": @"http://example.com/:/?#[]@!$&'()*+,;=",
+                                // Test percent-encoding
+                                @"http://example.com/?q=test%20this": @"http://example.com/?q=test%20this",
+                                @"http://example.com/å∫ç∂é": @"http://example.com/%C3%A5%E2%88%AB%C3%A7%E2%88%82%C3%A9",
+                                @"http://example.com/ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~":
+                                    @"http://example.com/%20!%22#$%&'()*+,-./0123456789:;%3C=%3E?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[%5C]%5E_%60abcdefghijklmnopqrstuvwxyz%7B%7C%7D~",
+                                @"http://example.com/😄": @"http://example.com/%F0%9F%98%84",
                                 };
 
     for (NSString *input in testPairs) {
