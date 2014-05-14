@@ -10,7 +10,7 @@
 		C9B9321E191EB9380046FF02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B9321D191EB9380046FF02 /* main.m */; };
 		C9B93222191EB9380046FF02 /* MSQAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B93221191EB9380046FF02 /* MSQAppDelegate.m */; };
 		C9B93224191EB9380046FF02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9B93223191EB9380046FF02 /* Images.xcassets */; };
-		C9B93237191EB9390046FF02 /* MasqueradeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B93236191EB9390046FF02 /* MasqueradeTests.m */; };
+		C9B93237191EB9390046FF02 /* MSQURLInterpreterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B93236191EB9390046FF02 /* MSQURLInterpreterTests.m */; };
 		C9C571AD191EE8A0009FDB2E /* MSQWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C571AC191EE8A0009FDB2E /* MSQWebViewController.m */; };
 		C9C6730B192311A7000AE47C /* MSQURLInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C6730A192311A7000AE47C /* MSQURLInterpreter.m */; };
 /* End PBXBuildFile section */
@@ -34,7 +34,7 @@
 		C9B93221191EB9380046FF02 /* MSQAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSQAppDelegate.m; sourceTree = "<group>"; };
 		C9B93223191EB9380046FF02 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C9B93229191EB9390046FF02 /* MasqueradeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MasqueradeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9B93236191EB9390046FF02 /* MasqueradeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasqueradeTests.m; sourceTree = "<group>"; };
+		C9B93236191EB9390046FF02 /* MSQURLInterpreterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSQURLInterpreterTests.m; sourceTree = "<group>"; };
 		C9C571AB191EE8A0009FDB2E /* MSQWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSQWebViewController.h; sourceTree = "<group>"; };
 		C9C571AC191EE8A0009FDB2E /* MSQWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSQWebViewController.m; sourceTree = "<group>"; };
 		C9C67309192311A7000AE47C /* MSQURLInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSQURLInterpreter.h; sourceTree = "<group>"; };
@@ -106,7 +106,7 @@
 		C9B93230191EB9390046FF02 /* MasqueradeTests */ = {
 			isa = PBXGroup;
 			children = (
-				C9B93236191EB9390046FF02 /* MasqueradeTests.m */,
+				C9B93236191EB9390046FF02 /* MSQURLInterpreterTests.m */,
 			);
 			path = MasqueradeTests;
 			sourceTree = "<group>";
@@ -264,7 +264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9B93237191EB9390046FF02 /* MasqueradeTests.m in Sources */,
+				C9B93237191EB9390046FF02 /* MSQURLInterpreterTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
