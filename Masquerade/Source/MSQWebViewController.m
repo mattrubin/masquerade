@@ -185,8 +185,8 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
     NSURLComponents *components = [NSURLComponents componentsWithString:urlString];
 
     // If no host is specified, treat this as a search
-    if (!components.host)
-        components = [self urlComponentsForSearch:textField.text]; // search for the unescaped string
+//    if (!components.host)
+//        components = [self urlComponentsForSearch:textField.text]; // search for the unescaped string
 
     // If no scheme has been specified, use HTTP
     if (!components.scheme) components.scheme = DEFAULT_SCHEME;
