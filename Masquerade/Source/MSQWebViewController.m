@@ -22,6 +22,8 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
 @property (nonatomic, strong) UIBarButtonItem *backButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *forwardButtonItem;
 
+@property (nonatomic, strong) NSString *searchTerm;
+
 @end
 
 
@@ -162,6 +164,8 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    self.searchTerm = nil;
+
     [self updateURLField];
     [self updateButtonsForWebView:webView];
 
@@ -172,8 +176,12 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
 {
     if ([error.domain isEqualToString:NSURLErrorDomain] && error.code == -1003) {
         // A server with the specified hostname could not be found.
-        [self searchForString:self.urlField.text];
+        if (self.searchTerm) {
+            [self searchForString:self.searchTerm];
+        }
     }
+    self.searchTerm = nil;
+
     [self updateURLField];
     [self updateButtonsForWebView:webView];
 
@@ -193,6 +201,9 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
 
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:components.URL];
     [self.webView loadRequest:request];
+
+    // Cache the input in case we need it for searching
+    self.searchTerm = textField.text;
 
     [textField resignFirstResponder];
     return NO;
