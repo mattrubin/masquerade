@@ -13,7 +13,7 @@
 NSString * const MSQResetBrowserNotification = @"MSQResetBrowserNotification";
 
 static NSString * const DEFAULT_SCHEME = @"http";
-static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
+static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q=%@";
 
 
 @interface MSQWebViewController () <UIWebViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
@@ -100,7 +100,7 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
     [super viewDidAppear:animated];
 
     if (!self.webView.request) {
-        [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://duckduckgo.com"]]];
+        [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://next.duckduckgo.com"]]];
     }
 }
 
