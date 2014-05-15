@@ -16,7 +16,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
 static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
 
 
-@interface MSQWebViewController () <UIWebViewDelegate, UITextFieldDelegate>
+@interface MSQWebViewController () <UIWebViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) UITextField *urlField;
 @property (nonatomic, strong) UIButton *stopButton;
@@ -83,7 +83,7 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
     self.forwardButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(goForward)];
     self.resetButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(resetBrowser)];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    self.toolbarItems = @[flexibleSpace, self.backButtonItem, flexibleSpace, self.forwardButtonItem, flexibleSpace, self.resetButtonItem];
+    self.toolbarItems = @[ self.resetButtonItem, flexibleSpace, self.backButtonItem, flexibleSpace, self.forwardButtonItem, flexibleSpace];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -148,7 +148,18 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
 
 - (void)resetBrowser
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:MSQResetBrowserNotification object:self];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reset Browser?" message:@"Are you sure you want to reset the browser? Your current page, cookies, cache, and browsing history will all be lost." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Reset", nil];
+    [alert show];
+}
+
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != alertView.cancelButtonIndex) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:MSQResetBrowserNotification object:self];
+    }
 }
 
 
