@@ -25,8 +25,11 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
 
-    self.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MSQWebViewController new]];
-    self.window.rootViewController = self.rootViewController;
+    // Listen for broswer reset
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetBrowser) name:MSQResetBrowserNotification object:nil];
+
+    // Set up the browser (ensuring we blow away any old session data left by mistake)
+    [self resetBrowser];
 
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -64,6 +67,18 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 
+    [self resetBrowser];
+}
+
+
+#pragma mark - Reset
+
+- (void)resetBrowser
+{
+    // Destroy any browsing session in progress
+    self.rootViewController = nil;
+    self.window.rootViewController = nil;
+
     // Delete all cookies
     NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     NSArray *cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies;
@@ -86,6 +101,10 @@
         NSURL *preferencesURL = [libraryURL URLByAppendingPathComponent:@"Preferences" isDirectory:YES];
         [self purgeDirectoryAtURL:preferencesURL];
     }
+
+    // Start a new browsing session
+    self.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MSQWebViewController new]];
+    self.window.rootViewController = self.rootViewController;
 }
 
 - (BOOL)deleteDirectoryAtURL:(NSURL *)directoryURL

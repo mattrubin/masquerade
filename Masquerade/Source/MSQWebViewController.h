@@ -9,6 +9,9 @@
 @import UIKit;
 
 
+extern NSString * const MSQResetBrowserNotification;
+
+
 @interface MSQWebViewController : UIViewController
 
 @property (nonatomic, strong) UIWebView *webView;

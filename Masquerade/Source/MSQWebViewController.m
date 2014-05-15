@@ -10,6 +10,8 @@
 #import "MSQURLInterpreter.h"
 
 
+NSString * const MSQResetBrowserNotification = @"MSQResetBrowserNotification";
+
 static NSString * const DEFAULT_SCHEME = @"http";
 static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
 
@@ -21,6 +23,7 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
 @property (nonatomic, strong) UIButton *reloadButton;
 @property (nonatomic, strong) UIBarButtonItem *backButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *forwardButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *resetButtonItem;
 
 @property (nonatomic, strong) NSString *searchTerm;
 
@@ -78,8 +81,9 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
     // Set up toolbar
     self.backButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(goBack)];
     self.forwardButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(goForward)];
+    self.resetButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(resetBrowser)];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    self.toolbarItems = @[flexibleSpace, self.backButtonItem, flexibleSpace, self.forwardButtonItem, flexibleSpace];
+    self.toolbarItems = @[flexibleSpace, self.backButtonItem, flexibleSpace, self.forwardButtonItem, flexibleSpace, self.resetButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -140,6 +144,11 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
 - (void)goForward
 {
     [self.webView goForward];
+}
+
+- (void)resetBrowser
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:MSQResetBrowserNotification object:self];
 }
 
 
