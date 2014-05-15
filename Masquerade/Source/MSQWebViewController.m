@@ -170,6 +170,10 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
+    if ([error.domain isEqualToString:NSURLErrorDomain] && error.code == -1003) {
+        // A server with the specified hostname could not be found.
+        [self searchForString:self.urlField.text];
+    }
     [self updateURLField];
     [self updateButtonsForWebView:webView];
 
@@ -184,10 +188,6 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
     NSString *urlString = [MSQURLInterpreter urlStringFromInput:textField.text];
     NSURLComponents *components = [NSURLComponents componentsWithString:urlString];
 
-    // If no host is specified, treat this as a search
-//    if (!components.host)
-//        components = [self urlComponentsForSearch:textField.text]; // search for the unescaped string
-
     // If no scheme has been specified, use HTTP
     if (!components.scheme) components.scheme = DEFAULT_SCHEME;
 
@@ -196,6 +196,16 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://duckduckgo.com/?q=%@";
 
     [textField resignFirstResponder];
     return NO;
+}
+
+
+#pragma mark - Search
+
+- (void)searchForString:(NSString *)searchString
+{
+    NSURLComponents *components = [self urlComponentsForSearch:searchString];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:components.URL];
+    [self.webView loadRequest:request];
 }
 
 - (NSURLComponents *)urlComponentsForSearch:(NSString *)searchString
