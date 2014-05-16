@@ -8,6 +8,7 @@
 
 #import "MSQWebViewController.h"
 #import "MSQURLInterpreter.h"
+#import <OvershareKit/OvershareKit.h>
 
 
 NSString * const MSQResetBrowserNotification = @"MSQResetBrowserNotification";
@@ -24,6 +25,7 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
 @property (nonatomic, strong) UIBarButtonItem *backButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *forwardButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *resetButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
 
 @property (nonatomic, strong) NSString *searchTerm;
 
@@ -82,8 +84,15 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
     self.backButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(goBack)];
     self.forwardButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(goForward)];
     self.resetButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(resetBrowser)];
+    self.shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(share)];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    self.toolbarItems = @[ self.resetButtonItem, flexibleSpace, self.backButtonItem, flexibleSpace, self.forwardButtonItem, flexibleSpace];
+    self.toolbarItems = @[self.resetButtonItem,
+                          flexibleSpace,
+                          self.backButtonItem,
+                          flexibleSpace,
+                          self.forwardButtonItem,
+                          flexibleSpace,
+                          self.shareButtonItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -150,6 +159,14 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reset Browser?" message:@"Are you sure you want to reset the browser? Your current page, cookies, cache, and browsing history will all be lost." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Reset", nil];
     [alert show];
+}
+
+- (void)share
+{
+    OSKShareableContent *sharableContent = [OSKShareableContent contentFromURL:self.webView.request.URL];
+    [[OSKPresentationManager sharedInstance] presentActivitySheetForContent:sharableContent
+                                                   presentingViewController:self
+                                                                    options:nil];
 }
 
 

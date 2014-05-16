@@ -13,6 +13,7 @@
 		C9B93237191EB9390046FF02 /* MSQURLInterpreterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B93236191EB9390046FF02 /* MSQURLInterpreterTests.m */; };
 		C9C571AD191EE8A0009FDB2E /* MSQWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C571AC191EE8A0009FDB2E /* MSQWebViewController.m */; };
 		C9C6730B192311A7000AE47C /* MSQURLInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C6730A192311A7000AE47C /* MSQURLInterpreter.m */; };
+		E1D111B9375744D09BCD2064 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BA615D54F0B4158B1AC6462 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +27,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		36E369D53215495595EF7568 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		7BA615D54F0B4158B1AC6462 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9B9320E191EB9380046FF02 /* Masquerade.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Masquerade.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9B93219191EB9380046FF02 /* Masquerade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Masquerade-Info.plist"; sourceTree = "<group>"; };
 		C9B9321D191EB9380046FF02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -48,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1D111B9375744D09BCD2064 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,11 +65,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		988B6C2C41C04AFFA5E2B217 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7BA615D54F0B4158B1AC6462 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C96B153A1925A93E005F90A6 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				36E369D53215495595EF7568 /* Pods.xcconfig */,
+			);
+			name = Config;
+			sourceTree = "<group>";
+		};
 		C9B93205191EB9380046FF02 = {
 			isa = PBXGroup;
 			children = (
 				C9B93217191EB9380046FF02 /* Masquerade */,
 				C9B93230191EB9390046FF02 /* MasqueradeTests */,
+				C96B153A1925A93E005F90A6 /* Config */,
+				988B6C2C41C04AFFA5E2B217 /* Frameworks */,
 				C9B9320F191EB9380046FF02 /* Products */,
 				C9E5740B191ECB4E00865E93 /* Docs */,
 			);
@@ -148,10 +170,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C9B9323A191EB9390046FF02 /* Build configuration list for PBXNativeTarget "Masquerade" */;
 			buildPhases = (
+				CB97010316434447AFF7B824 /* Check Pods Manifest.lock */,
 				C9B9320A191EB9380046FF02 /* Sources */,
 				C9B9320B191EB9380046FF02 /* Frameworks */,
 				C9B9320C191EB9380046FF02 /* Resources */,
 				4C63E5E71B1442DFA8B211C1 /* Warn for TODO and FIXME comments */,
+				0BADB2AE16E9464784B7507F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -232,6 +256,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0BADB2AE16E9464784B7507F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4C63E5E71B1442DFA8B211C1 /* Warn for TODO and FIXME comments */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -245,6 +284,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "KEYWORDS=\"TODO:|FIXME:|\\?\\?\\?:|\\!\\!\\!:\"\nFILE_EXTENSIONS=\"h|m|mm|c|cpp\"\nfind -E \"${SRCROOT}\" -ipath \"${SRCROOT}/pods\" -prune -o \\( -regex \".*\\.($FILE_EXTENSIONS)$\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | perl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"\n";
+		};
+		CB97010316434447AFF7B824 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -430,6 +484,7 @@
 		};
 		C9B9323B191EB9390046FF02 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 36E369D53215495595EF7568 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -441,6 +496,7 @@
 		};
 		C9B9323C191EB9390046FF02 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 36E369D53215495595EF7568 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
