@@ -1,6 +1,6 @@
 language: objective-c
 
-xcode_project: Masquerade.xcodeproj
+xcode_workspace: Masquerade.xcworkspace
 xcode_scheme: Masquerade
 xcode_sdk:
   - iphonesimulator7.0
