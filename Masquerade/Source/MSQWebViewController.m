@@ -131,6 +131,8 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
 {
     self.backButtonItem.enabled = webView.canGoBack;
     self.forwardButtonItem.enabled = webView.canGoForward;
+    self.shareButtonItem.enabled = !!webView.request.URL.absoluteString.length;
+
     self.urlField.backgroundColor = webView.isLoading ? self.view.tintColor : [UIColor whiteColor];
     self.urlField.rightView = webView.isLoading ? self.stopButton : self.reloadButton;
 }
