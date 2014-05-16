@@ -9,6 +9,7 @@
 #import "MSQWebViewController.h"
 #import "MSQURLInterpreter.h"
 #import <OvershareKit/OvershareKit.h>
+#import <OvershareKit/OSKRPSTPasswordManagementAppService.h>
 
 
 NSString * const MSQResetBrowserNotification = @"MSQResetBrowserNotification";
@@ -26,6 +27,7 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
 @property (nonatomic, strong) UIBarButtonItem *forwardButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *resetButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *shareButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *passwordButtonItem;
 
 @property (nonatomic, strong) NSString *searchTerm;
 
@@ -93,6 +95,19 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
                           self.forwardButtonItem,
                           flexibleSpace,
                           self.shareButtonItem];
+
+    if ([OSKRPSTPasswordManagementAppService passwordManagementAppIsAvailable]) {
+        self.passwordButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"🔑" style:UIBarButtonItemStylePlain target:self action:@selector(helpWithPassword)];
+        self.toolbarItems = @[self.resetButtonItem,
+                              flexibleSpace,
+                              self.backButtonItem,
+                              flexibleSpace,
+                              self.forwardButtonItem,
+                              flexibleSpace,
+                              self.passwordButtonItem,
+                              flexibleSpace,
+                              self.shareButtonItem];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -132,6 +147,7 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
     self.backButtonItem.enabled = webView.canGoBack;
     self.forwardButtonItem.enabled = webView.canGoForward;
     self.shareButtonItem.enabled = !!webView.request.URL.absoluteString.length;
+    self.passwordButtonItem.enabled = !!webView.request.URL.absoluteString.length;
 
     self.urlField.backgroundColor = webView.isLoading ? self.view.tintColor : [UIColor whiteColor];
     self.urlField.rightView = webView.isLoading ? self.stopButton : self.reloadButton;
@@ -183,6 +199,14 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
     [[OSKPresentationManager sharedInstance] presentActivitySheetForContent:sharableContent
                                                    presentingViewController:self
                                                                     options:@{OSKActivityOption_ExcludedTypes: excludedTypes}];
+}
+
+- (void)helpWithPassword
+{
+    if ([OSKRPSTPasswordManagementAppService passwordManagementAppIsAvailable]) {
+        NSURL *url = [OSKRPSTPasswordManagementAppService passwordManagementAppCompleteURLForSearchQuery:self.webView.request.URL.host];
+        [[UIApplication sharedApplication] openURL:url];
+    }
 }
 
 
