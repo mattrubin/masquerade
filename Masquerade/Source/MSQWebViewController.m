@@ -18,6 +18,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
 static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q=%@";
 
 static NSString * const kURLKeyPath = @"webView.URL";
+static NSString * const kLoadingKeyPath = @"webView.loading";
 
 
 @interface MSQWebViewController () <UITextFieldDelegate, UIAlertViewDelegate>
@@ -48,6 +49,7 @@ static NSString * const kURLKeyPath = @"webView.URL";
         self.shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(share)];
 
         [self addObserver:self forKeyPath:kURLKeyPath options:0 context:nil];
+        [self addObserver:self forKeyPath:kLoadingKeyPath options:0 context:nil];
     }
     return self;
 }
@@ -58,7 +60,17 @@ static NSString * const kURLKeyPath = @"webView.URL";
         self.urlField.text = self.webView.URL.absoluteString;
         self.shareButtonItem.enabled = !!self.webView.URL.absoluteString.length;
         self.passwordButtonItem.enabled = !!self.webView.URL.absoluteString.length;
+    } else if ([keyPath isEqualToString:kLoadingKeyPath]) {
+        // TODO: Animated loading bar with webView.estimatedProgress
+        self.urlField.backgroundColor = self.webView.isLoading ? self.view.tintColor : [UIColor whiteColor];
+        self.urlField.rightView = self.webView.isLoading ? self.stopButton : self.reloadButton;
     }
+}
+
+- (void)dealloc
+{
+    [self removeObserver:self forKeyPath:kURLKeyPath];
+    [self removeObserver:self forKeyPath:kLoadingKeyPath];
 }
 
 - (void)loadView
@@ -150,9 +162,6 @@ static NSString * const kURLKeyPath = @"webView.URL";
 {
     self.backButtonItem.enabled = webView.canGoBack;
     self.forwardButtonItem.enabled = webView.canGoForward;
-
-    self.urlField.backgroundColor = webView.isLoading ? self.view.tintColor : [UIColor whiteColor];
-    self.urlField.rightView = webView.isLoading ? self.stopButton : self.reloadButton;
 }
 
 - (void)stopLoading
