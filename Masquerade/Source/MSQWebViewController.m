@@ -17,6 +17,8 @@ NSString * const MSQResetBrowserNotification = @"MSQResetBrowserNotification";
 static NSString * const DEFAULT_SCHEME = @"http";
 static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q=%@";
 
+static NSString * const kURLKeyPath = @"webView.URL";
+
 
 @interface MSQWebViewController () <UITextFieldDelegate, UIAlertViewDelegate>
 
@@ -40,9 +42,16 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        [self addObserver:self forKeyPath:kURLKeyPath options:0 context:nil];
     }
     return self;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:kURLKeyPath]) {
+        self.urlField.text = self.webView.URL.absoluteString;
+    }
 }
 
 - (void)loadView
@@ -114,7 +123,6 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
 
     self.navigationController.toolbarHidden = NO;
     [self updateButtonsForWebView:self.webView];
-    [self updateURLField];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -134,11 +142,6 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
 
 
 #pragma mark -
-
-- (void)updateURLField
-{
-    self.urlField.text = self.webView.URL.absoluteString;
-}
 
 - (void)updateButtonsForWebView:(WKWebView *)webView
 {
