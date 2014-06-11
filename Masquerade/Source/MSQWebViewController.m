@@ -42,6 +42,11 @@ static NSString * const kURLKeyPath = @"webView.URL";
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.backButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(goBack)];
+        self.forwardButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(goForward)];
+        self.resetButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(resetBrowser)];
+        self.shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(share)];
+
         [self addObserver:self forKeyPath:kURLKeyPath options:0 context:nil];
     }
     return self;
@@ -51,6 +56,8 @@ static NSString * const kURLKeyPath = @"webView.URL";
 {
     if ([keyPath isEqualToString:kURLKeyPath]) {
         self.urlField.text = self.webView.URL.absoluteString;
+        self.shareButtonItem.enabled = !!self.webView.URL.absoluteString.length;
+        self.passwordButtonItem.enabled = !!self.webView.URL.absoluteString.length;
     }
 }
 
@@ -90,10 +97,6 @@ static NSString * const kURLKeyPath = @"webView.URL";
     [self.reloadButton addTarget:self action:@selector(reload) forControlEvents:UIControlEventTouchUpInside];
 
     // Set up toolbar
-    self.backButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(goBack)];
-    self.forwardButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(goForward)];
-    self.resetButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(resetBrowser)];
-    self.shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(share)];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     self.toolbarItems = @[self.resetButtonItem,
                           flexibleSpace,
@@ -147,8 +150,6 @@ static NSString * const kURLKeyPath = @"webView.URL";
 {
     self.backButtonItem.enabled = webView.canGoBack;
     self.forwardButtonItem.enabled = webView.canGoForward;
-    self.shareButtonItem.enabled = !!webView.URL.absoluteString.length;
-    self.passwordButtonItem.enabled = !!webView.URL.absoluteString.length;
 
     self.urlField.backgroundColor = webView.isLoading ? self.view.tintColor : [UIColor whiteColor];
     self.urlField.rightView = webView.isLoading ? self.stopButton : self.reloadButton;
