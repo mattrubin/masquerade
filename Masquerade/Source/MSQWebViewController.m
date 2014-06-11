@@ -18,7 +18,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
 static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q=%@";
 
 
-@interface MSQWebViewController () <UIWebViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
+@interface MSQWebViewController () <UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) UITextField *urlField;
 @property (nonatomic, strong) UIButton *stopButton;
@@ -47,9 +47,7 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
 
 - (void)loadView
 {
-    self.webView = [[UIWebView alloc] init];
-    self.webView.scalesPageToFit = YES;
-    self.webView.delegate = self;
+    self.webView = [WKWebView new];
     self.view = self.webView;
 }
 
@@ -123,7 +121,7 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
 {
     [super viewDidAppear:animated];
 
-    if (!self.webView.request) {
+    if (!self.webView.URL) {
         [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://next.duckduckgo.com"]]];
     }
 }
@@ -139,15 +137,15 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
 
 - (void)updateURLField
 {
-    self.urlField.text = self.webView.request.URL.absoluteString;
+    self.urlField.text = self.webView.URL.absoluteString;
 }
 
-- (void)updateButtonsForWebView:(UIWebView *)webView
+- (void)updateButtonsForWebView:(WKWebView *)webView
 {
     self.backButtonItem.enabled = webView.canGoBack;
     self.forwardButtonItem.enabled = webView.canGoForward;
-    self.shareButtonItem.enabled = !!webView.request.URL.absoluteString.length;
-    self.passwordButtonItem.enabled = !!webView.request.URL.absoluteString.length;
+    self.shareButtonItem.enabled = !!webView.URL.absoluteString.length;
+    self.passwordButtonItem.enabled = !!webView.URL.absoluteString.length;
 
     self.urlField.backgroundColor = webView.isLoading ? self.view.tintColor : [UIColor whiteColor];
     self.urlField.rightView = webView.isLoading ? self.stopButton : self.reloadButton;
@@ -181,7 +179,7 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
 
 - (void)share
 {
-    OSKShareableContent *sharableContent = [OSKShareableContent contentFromURL:self.webView.request.URL];
+    OSKShareableContent *sharableContent = [OSKShareableContent contentFromURL:self.webView.URL];
 
     NSArray *excludedTypes = @[// Exclude social networks (this is a private browser, after all)
                                OSKActivityType_API_AppDotNet,
@@ -204,7 +202,7 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
 - (void)helpWithPassword
 {
     if ([OSKRPSTPasswordManagementAppService passwordManagementAppIsAvailable]) {
-        NSURL *url = [OSKRPSTPasswordManagementAppService passwordManagementAppCompleteURLForSearchQuery:self.webView.request.URL.host];
+        NSURL *url = [OSKRPSTPasswordManagementAppService passwordManagementAppCompleteURLForSearchQuery:self.webView.URL.host];
         [[UIApplication sharedApplication] openURL:url];
     }
 }
@@ -217,52 +215,6 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
     if (buttonIndex != alertView.cancelButtonIndex) {
         [[NSNotificationCenter defaultCenter] postNotificationName:MSQResetBrowserNotification object:self];
     }
-}
-
-
-#pragma mark - UIWebViewDelegate
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
-    // We don't update the URL field here because the request might be for some widget embedded in the larger page
-    [self updateButtonsForWebView:webView];
-
-    NSLog(@"Should Load? %@", request.URL);
-    return YES;
-}
-
-- (void)webViewDidStartLoad:(UIWebView *)webView
-{
-    // We don't update the URL field here because webView.request might still hold the request for the previous page
-    [self updateButtonsForWebView:webView];
-
-    NSLog(@"Loading...");
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    self.searchTerm = nil;
-
-    [self updateURLField];
-    [self updateButtonsForWebView:webView];
-
-    NSLog(@"Loaded.");
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
-    if ([error.domain isEqualToString:NSURLErrorDomain] && error.code == -1003) {
-        // A server with the specified hostname could not be found.
-        if (self.searchTerm) {
-            [self searchForString:self.searchTerm];
-        }
-    }
-    self.searchTerm = nil;
-
-    [self updateURLField];
-    [self updateButtonsForWebView:webView];
-
-    NSLog(@"Failed: %@ (%@)", error.localizedDescription, error.userInfo[NSURLErrorFailingURLErrorKey]);
 }
 
 
