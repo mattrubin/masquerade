@@ -21,7 +21,7 @@ static NSString * const kURLKeyPath = @"webView.URL";
 static NSString * const kLoadingKeyPath = @"webView.loading";
 
 
-@interface MSQWebViewController () <UITextFieldDelegate, UIAlertViewDelegate>
+@interface MSQWebViewController () <WKNavigationDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) UITextField *urlField;
 @property (nonatomic, strong) UIButton *stopButton;
@@ -76,6 +76,7 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
 - (void)loadView
 {
     self.webView = [WKWebView new];
+    self.webView.navigationDelegate = self;
     self.view = self.webView;
 }
 
@@ -228,6 +229,14 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
     if (buttonIndex != alertView.cancelButtonIndex) {
         [[NSNotificationCenter defaultCenter] postNotificationName:MSQResetBrowserNotification object:self];
     }
+}
+
+
+#pragma mark - WKNavigationDelegate
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
+{
+    [self updateButtonsForWebView:webView];
 }
 
 
