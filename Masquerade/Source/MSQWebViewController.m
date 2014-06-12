@@ -10,12 +10,12 @@
 #import "MSQURLInterpreter.h"
 #import "MSQSharingManager.h"
 #import "MSQPasswordManager.h"
+#import "MSQSearchManager.h"
 
 
 NSString * const MSQResetBrowserNotification = @"MSQResetBrowserNotification";
 
 static NSString * const DEFAULT_SCHEME = @"http";
-static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q=%@";
 
 static NSString * const kURLKeyPath = @"webView.URL";
 static NSString * const kLoadingKeyPath = @"webView.loading";
@@ -245,20 +245,8 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
 
 - (void)searchForString:(NSString *)searchString
 {
-    NSURLComponents *components = [self urlComponentsForSearch:searchString];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:components.URL];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[MSQSearchManager urlForSearch:searchString]];
     [self.webView loadRequest:request];
-}
-
-- (NSURLComponents *)urlComponentsForSearch:(NSString *)searchString
-{
-    CFStringRef escapedString = CFURLCreateStringByAddingPercentEscapes(NULL,
-                                                                        (__bridge CFStringRef)(searchString),
-                                                                        NULL,
-                                                                        CFSTR(":/?#[]@!$&'()*+,;=%"),
-                                                                        kCFStringEncodingUTF8);
-
-    return [NSURLComponents componentsWithString:[NSString stringWithFormat:DEFAULT_SEARCH_FORMAT, CFBridgingRelease(escapedString)]];
 }
 
 @end

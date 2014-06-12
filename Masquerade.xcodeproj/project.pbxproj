@@ -10,6 +10,7 @@
 		C9290C3519482528008AE4DE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9290C3419482528008AE4DE /* WebKit.framework */; };
 		C9290C3819492CC2008AE4DE /* MSQSharingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C9290C3719492CC2008AE4DE /* MSQSharingManager.m */; };
 		C9290C3B19492E2E008AE4DE /* MSQPasswordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C9290C3A19492E2E008AE4DE /* MSQPasswordManager.m */; };
+		C9290C3E19492F7D008AE4DE /* MSQSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C9290C3D19492F7D008AE4DE /* MSQSearchManager.m */; };
 		C96B153C1925EAE4005F90A6 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C96B153B1925EAE4005F90A6 /* AddressBook.framework */; };
 		C96B153E1925EAEE005F90A6 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C96B153D1925EAEE005F90A6 /* MediaPlayer.framework */; };
 		C96B15401925EB02005F90A6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C96B153F1925EB02005F90A6 /* CoreLocation.framework */; };
@@ -40,6 +41,8 @@
 		C9290C3719492CC2008AE4DE /* MSQSharingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSQSharingManager.m; sourceTree = "<group>"; };
 		C9290C3919492E2E008AE4DE /* MSQPasswordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSQPasswordManager.h; sourceTree = "<group>"; };
 		C9290C3A19492E2E008AE4DE /* MSQPasswordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSQPasswordManager.m; sourceTree = "<group>"; };
+		C9290C3C19492F7D008AE4DE /* MSQSearchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSQSearchManager.h; sourceTree = "<group>"; };
+		C9290C3D19492F7D008AE4DE /* MSQSearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSQSearchManager.m; sourceTree = "<group>"; };
 		C96B153B1925EAE4005F90A6 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		C96B153D1925EAEE005F90A6 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		C96B153F1925EB02005F90A6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -176,6 +179,8 @@
 				C9290C3719492CC2008AE4DE /* MSQSharingManager.m */,
 				C9290C3919492E2E008AE4DE /* MSQPasswordManager.h */,
 				C9290C3A19492E2E008AE4DE /* MSQPasswordManager.m */,
+				C9290C3C19492F7D008AE4DE /* MSQSearchManager.h */,
+				C9290C3D19492F7D008AE4DE /* MSQSearchManager.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -336,6 +341,7 @@
 				C9C571AD191EE8A0009FDB2E /* MSQWebViewController.m in Sources */,
 				C9290C3819492CC2008AE4DE /* MSQSharingManager.m in Sources */,
 				C9B93222191EB9380046FF02 /* MSQAppDelegate.m in Sources */,
+				C9290C3E19492F7D008AE4DE /* MSQSearchManager.m in Sources */,
 				C9C6730B192311A7000AE47C /* MSQURLInterpreter.m in Sources */,
 				C9290C3B19492E2E008AE4DE /* MSQPasswordManager.m in Sources */,
 				C9B9321E191EB9380046FF02 /* main.m in Sources */,
