@@ -117,7 +117,7 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
     [super viewDidAppear:animated];
 
     if (!self.webView.URL) {
-        [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://next.duckduckgo.com"]]];
+        [self.urlField becomeFirstResponder];
     }
 }
 

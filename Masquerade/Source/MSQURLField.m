@@ -58,6 +58,12 @@
     self.textField.frame = self.bounds;
 }
 
+- (BOOL)becomeFirstResponder
+{
+    return [self.textField becomeFirstResponder];
+}
+
+
 #pragma mark - Properties
 
 - (void)setLoading:(BOOL)loading
