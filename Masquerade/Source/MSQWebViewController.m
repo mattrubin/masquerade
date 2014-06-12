@@ -12,6 +12,7 @@
 #import "MSQPasswordManager.h"
 #import "MSQSearchManager.h"
 #import "MSQResetManager.h"
+#import "MSQURLField.h"
 
 
 static NSString * const DEFAULT_SCHEME = @"http";
@@ -20,11 +21,9 @@ static NSString * const kURLKeyPath = @"webView.URL";
 static NSString * const kLoadingKeyPath = @"webView.loading";
 
 
-@interface MSQWebViewController () <WKNavigationDelegate, UITextFieldDelegate>
+@interface MSQWebViewController () <WKNavigationDelegate, MSQURLFieldDelegate>
 
-@property (nonatomic, strong) UITextField *urlField;
-@property (nonatomic, strong) UIButton *stopButton;
-@property (nonatomic, strong) UIButton *reloadButton;
+@property (nonatomic, strong) MSQURLField *urlField;
 @property (nonatomic, strong) UIBarButtonItem *backButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *forwardButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *resetButtonItem;
@@ -60,9 +59,7 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
         self.shareButtonItem.enabled = !!self.webView.URL.absoluteString.length;
         self.passwordButtonItem.enabled = !!self.webView.URL.absoluteString.length;
     } else if ([keyPath isEqualToString:kLoadingKeyPath]) {
-        // TODO: Animated loading bar with webView.estimatedProgress
-        self.urlField.backgroundColor = self.webView.isLoading ? self.view.tintColor : [UIColor whiteColor];
-        self.urlField.rightView = self.webView.isLoading ? self.stopButton : self.reloadButton;
+        self.urlField.loading = self.webView.isLoading;
     }
 }
 
@@ -84,29 +81,9 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
     [super viewDidLoad];
 
     // Set up navigation bar
-    self.urlField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 300, 35)];
-    self.urlField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-    self.urlField.borderStyle = UITextBorderStyleRoundedRect;
-    self.urlField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    self.urlField.autocorrectionType = UITextAutocorrectionTypeNo;
-    self.urlField.spellCheckingType = UITextSpellCheckingTypeNo;
-    self.urlField.keyboardType = UIKeyboardTypeWebSearch;
-    self.urlField.returnKeyType = UIReturnKeyGo;
-    self.urlField.enablesReturnKeyAutomatically = YES;
-    self.urlField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    self.urlField.rightViewMode = UITextFieldViewModeUnlessEditing;
+    self.urlField = [[MSQURLField alloc] initWithFrame:CGRectMake(0, 0, 300, 35)];
     self.urlField.delegate = self;
     self.navigationItem.titleView = self.urlField;
-
-    self.stopButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
-    [self.stopButton setTitle:@"✖︎" forState:UIControlStateNormal];
-    [self.stopButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
-    [self.stopButton addTarget:self action:@selector(stopLoading) forControlEvents:UIControlEventTouchUpInside];
-
-    self.reloadButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
-    [self.reloadButton setTitle:@"↻" forState:UIControlStateNormal];
-    [self.reloadButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
-    [self.reloadButton addTarget:self action:@selector(reload) forControlEvents:UIControlEventTouchUpInside];
 
     // Set up toolbar
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -164,16 +141,6 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
     self.forwardButtonItem.enabled = webView.canGoForward;
 }
 
-- (void)stopLoading
-{
-    [self.webView stopLoading];
-}
-
-- (void)reload
-{
-    [self.webView reload];
-}
-
 - (void)goBack
 {
     [self.webView goBack];
@@ -208,11 +175,11 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
 }
 
 
-#pragma mark - UITextFieldDelegate
+#pragma mark - MSQURLFieldDelegate
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (void)urlField:(MSQURLField *)urlField didEnterText:(NSString *)string
 {
-    NSString *urlString = [MSQURLInterpreter urlStringFromInput:textField.text];
+    NSString *urlString = [MSQURLInterpreter urlStringFromInput:string];
     NSURLComponents *components = [NSURLComponents componentsWithString:urlString];
 
     // If no scheme has been specified, use HTTP
@@ -222,10 +189,17 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
     [self.webView loadRequest:request];
 
     // Cache the input in case we need it for searching
-    self.searchTerm = textField.text;
+    self.searchTerm = string;
+}
 
-    [textField resignFirstResponder];
-    return NO;
+- (void)stopLoadingFromURLField:(MSQURLField *)urlField
+{
+    [self.webView stopLoading];
+}
+
+- (void)reloadFromURLField:(MSQURLField *)urlField
+{
+    [self.webView reload];
 }
 
 
