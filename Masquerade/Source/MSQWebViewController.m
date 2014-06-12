@@ -118,7 +118,7 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
                           flexibleSpace,
                           self.shareButtonItem];
 
-    if ([MSQPasswordManager isAvailable]) {
+    if ([[MSQPasswordManager sharedManager] isAvailable]) {
         self.passwordButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"🔑" style:UIBarButtonItemStylePlain target:self action:@selector(helpWithPassword)];
         self.toolbarItems = @[self.resetButtonItem,
                               flexibleSpace,
@@ -191,12 +191,12 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
 
 - (void)share
 {
-    [MSQSharingManager shareURL:self.webView.URL fromViewController:self];
+    [[MSQSharingManager sharedManager] shareURL:self.webView.URL fromViewController:self];
 }
 
 - (void)helpWithPassword
 {
-    [MSQPasswordManager requestPasswordForURL:self.webView.URL];
+    [[MSQPasswordManager sharedManager] requestPasswordForURL:self.webView.URL];
 }
 
 
@@ -233,7 +233,7 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
 
 - (void)searchForString:(NSString *)searchString
 {
-    NSURLRequest *request = [NSURLRequest requestWithURL:[MSQSearchManager urlForSearch:searchString]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[[MSQSearchManager sharedManager] urlForSearch:searchString]];
     [self.webView loadRequest:request];
 }
 

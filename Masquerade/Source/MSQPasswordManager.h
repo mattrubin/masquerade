@@ -11,7 +11,9 @@
 
 @interface MSQPasswordManager : NSObject
 
-+ (BOOL)isAvailable;
-+ (void)requestPasswordForURL:(NSURL *)url;
++ (instancetype)sharedManager;
+
+- (BOOL)isAvailable;
+- (void)requestPasswordForURL:(NSURL *)url;
 
 @end

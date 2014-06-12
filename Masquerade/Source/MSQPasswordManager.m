@@ -12,12 +12,22 @@
 
 @implementation MSQPasswordManager
 
-+ (BOOL)isAvailable
++ (instancetype)sharedManager
+{
+    static id sharedInstance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [self new];
+    });
+    return sharedInstance;
+}
+
+- (BOOL)isAvailable
 {
     return [OSKRPSTPasswordManagementAppService passwordManagementAppIsAvailable];
 }
 
-+ (void)requestPasswordForURL:(NSURL *)url
+- (void)requestPasswordForURL:(NSURL *)url
 {
     if ([OSKRPSTPasswordManagementAppService passwordManagementAppIsAvailable]) {
         NSURL *passwordAppURL = [OSKRPSTPasswordManagementAppService passwordManagementAppCompleteURLForSearchQuery:url.host];

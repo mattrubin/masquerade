@@ -14,7 +14,17 @@ static NSString * const DEFAULT_SEARCH_FORMAT = @"https://next.duckduckgo.com/?q
 
 @implementation MSQSearchManager
 
-+ (NSURL *)urlForSearch:(NSString *)searchString
++ (instancetype)sharedManager
+{
+    static id sharedInstance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [self new];
+    });
+    return sharedInstance;
+}
+
+- (NSURL *)urlForSearch:(NSString *)searchString
 {
     CFStringRef escapedString = CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                         (__bridge CFStringRef)(searchString),

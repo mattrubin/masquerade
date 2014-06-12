@@ -109,6 +109,21 @@
 			name = Config;
 			sourceTree = "<group>";
 		};
+		C9B3E8A81949373600790926 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				C9290C3619492CC2008AE4DE /* MSQSharingManager.h */,
+				C9290C3719492CC2008AE4DE /* MSQSharingManager.m */,
+				C9290C3919492E2E008AE4DE /* MSQPasswordManager.h */,
+				C9290C3A19492E2E008AE4DE /* MSQPasswordManager.m */,
+				C9290C3C19492F7D008AE4DE /* MSQSearchManager.h */,
+				C9290C3D19492F7D008AE4DE /* MSQSearchManager.m */,
+				C9B3E8A5194931EE00790926 /* MSQResetManager.h */,
+				C9B3E8A6194931EE00790926 /* MSQResetManager.m */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
 		C9B93205191EB9380046FF02 = {
 			isa = PBXGroup;
 			children = (
@@ -178,14 +193,7 @@
 				C9C571AC191EE8A0009FDB2E /* MSQWebViewController.m */,
 				C9C67309192311A7000AE47C /* MSQURLInterpreter.h */,
 				C9C6730A192311A7000AE47C /* MSQURLInterpreter.m */,
-				C9290C3619492CC2008AE4DE /* MSQSharingManager.h */,
-				C9290C3719492CC2008AE4DE /* MSQSharingManager.m */,
-				C9290C3919492E2E008AE4DE /* MSQPasswordManager.h */,
-				C9290C3A19492E2E008AE4DE /* MSQPasswordManager.m */,
-				C9290C3C19492F7D008AE4DE /* MSQSearchManager.h */,
-				C9290C3D19492F7D008AE4DE /* MSQSearchManager.m */,
-				C9B3E8A5194931EE00790926 /* MSQResetManager.h */,
-				C9B3E8A6194931EE00790926 /* MSQResetManager.m */,
+				C9B3E8A81949373600790926 /* Managers */,
 			);
 			path = Source;
 			sourceTree = "<group>";

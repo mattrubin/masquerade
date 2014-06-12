@@ -11,6 +11,8 @@
 
 @interface MSQSharingManager : NSObject
 
-+ (void)shareURL:(NSURL *)url fromViewController:(UIViewController *)viewController;
++ (instancetype)sharedManager;
+
+- (void)shareURL:(NSURL *)url fromViewController:(UIViewController *)viewController;
 
 @end

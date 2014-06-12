@@ -12,7 +12,17 @@
 
 @implementation MSQSharingManager
 
-+ (void)shareURL:(NSURL *)url fromViewController:(UIViewController *)viewController
++ (instancetype)sharedManager
+{
+    static id sharedInstance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [self new];
+    });
+    return sharedInstance;
+}
+
+- (void)shareURL:(NSURL *)url fromViewController:(UIViewController *)viewController
 {
     OSKShareableContent *sharableContent = [OSKShareableContent contentFromURL:url];
 

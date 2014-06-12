@@ -11,6 +11,8 @@
 
 @interface MSQSearchManager : NSObject
 
-+ (NSURL *)urlForSearch:(NSString *)searchString;
++ (instancetype)sharedManager;
+
+- (NSURL *)urlForSearch:(NSString *)searchString;
 
 @end
