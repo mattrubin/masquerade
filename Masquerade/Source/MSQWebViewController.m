@@ -69,6 +69,9 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
     [self removeObserver:self forKeyPath:kLoadingKeyPath];
 }
 
+
+#pragma mark - View Lifecycle
+
 - (void)loadView
 {
     self.webView = [WKWebView new];
@@ -109,14 +112,6 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    self.navigationController.toolbarHidden = NO;
-    [self updateButtonsForWebView:self.webView];
-}
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -126,20 +121,8 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-
-#pragma mark -
-
-- (void)updateButtonsForWebView:(WKWebView *)webView
-{
-    self.backButtonItem.enabled = webView.canGoBack;
-    self.forwardButtonItem.enabled = webView.canGoForward;
-}
+#pragma mark - Actions
 
 - (void)goBack
 {
@@ -171,7 +154,8 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
-    [self updateButtonsForWebView:webView];
+    self.backButtonItem.enabled = webView.canGoBack;
+    self.forwardButtonItem.enabled = webView.canGoForward;
 }
 
 
@@ -200,15 +184,6 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
 - (void)reloadFromURLField:(MSQURLField *)urlField
 {
     [self.webView reload];
-}
-
-
-#pragma mark - Search
-
-- (void)searchForString:(NSString *)searchString
-{
-    NSURLRequest *request = [NSURLRequest requestWithURL:[[MSQSearchManager sharedManager] urlForSearch:searchString]];
-    [self.webView loadRequest:request];
 }
 
 @end

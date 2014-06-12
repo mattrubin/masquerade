@@ -13,7 +13,7 @@
 
 @interface MSQAppDelegate () <MSQResetManagerDelegate>
 
-@property (nonatomic, strong) UIViewController *rootViewController;
+@property (nonatomic, strong) UINavigationController *rootViewController;
 @property (nonatomic, strong) UIViewController *maskViewController;
 
 @end
@@ -83,6 +83,7 @@
 {
     // Start a new browsing session
     self.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MSQWebViewController new]];
+    self.rootViewController.toolbarHidden = NO;
     self.window.rootViewController = self.rootViewController;
 }
 
