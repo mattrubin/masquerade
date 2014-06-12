@@ -9,7 +9,7 @@
 #import "MSQWebViewController.h"
 #import "MSQURLInterpreter.h"
 #import "MSQSharingManager.h"
-#import <OvershareKit/OSKRPSTPasswordManagementAppService.h>
+#import "MSQPasswordManager.h"
 
 
 NSString * const MSQResetBrowserNotification = @"MSQResetBrowserNotification";
@@ -119,7 +119,7 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
                           flexibleSpace,
                           self.shareButtonItem];
 
-    if ([OSKRPSTPasswordManagementAppService passwordManagementAppIsAvailable]) {
+    if ([MSQPasswordManager isAvailable]) {
         self.passwordButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"🔑" style:UIBarButtonItemStylePlain target:self action:@selector(helpWithPassword)];
         self.toolbarItems = @[self.resetButtonItem,
                               flexibleSpace,
@@ -198,10 +198,7 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
 
 - (void)helpWithPassword
 {
-    if ([OSKRPSTPasswordManagementAppService passwordManagementAppIsAvailable]) {
-        NSURL *url = [OSKRPSTPasswordManagementAppService passwordManagementAppCompleteURLForSearchQuery:self.webView.URL.host];
-        [[UIApplication sharedApplication] openURL:url];
-    }
+    [MSQPasswordManager requestPasswordForURL:self.webView.URL];
 }
 
 
