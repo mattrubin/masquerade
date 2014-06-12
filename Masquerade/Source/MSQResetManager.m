@@ -21,6 +21,25 @@
     return sharedInstance;
 }
 
+- (void)requestReset
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reset Browser?" message:@"Are you sure you want to reset the browser? Your current page, cookies, cache, and browsing history will all be lost." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Reset", nil];
+    [alert show];
+}
+
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != alertView.cancelButtonIndex) {
+        [self resetBrowser];
+    }
+}
+
+
+#pragma mark - Reset Logic
+
 - (void)resetBrowser
 {
     // Destroy any browsing session in progress

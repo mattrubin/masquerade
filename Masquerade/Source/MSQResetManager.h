@@ -22,6 +22,8 @@
 + (instancetype)sharedManager;
 
 @property (nonatomic, weak) id<MSQResetManagerDelegate> delegate;
+
+- (void)requestReset;
 - (void)resetBrowser;
 
 @end

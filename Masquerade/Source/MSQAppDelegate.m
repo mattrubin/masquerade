@@ -26,9 +26,6 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
 
-    // Listen for broswer reset
-    [[NSNotificationCenter defaultCenter] addObserver:[MSQResetManager sharedManager] selector:@selector(resetBrowser) name:MSQResetBrowserNotification object:nil];
-
     // Set up the browser (ensuring we blow away any old session data left by mistake)
     [MSQResetManager sharedManager].delegate = self;
     [[MSQResetManager sharedManager] resetBrowser];

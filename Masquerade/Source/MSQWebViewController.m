@@ -11,9 +11,8 @@
 #import "MSQSharingManager.h"
 #import "MSQPasswordManager.h"
 #import "MSQSearchManager.h"
+#import "MSQResetManager.h"
 
-
-NSString * const MSQResetBrowserNotification = @"MSQResetBrowserNotification";
 
 static NSString * const DEFAULT_SCHEME = @"http";
 
@@ -21,7 +20,7 @@ static NSString * const kURLKeyPath = @"webView.URL";
 static NSString * const kLoadingKeyPath = @"webView.loading";
 
 
-@interface MSQWebViewController () <WKNavigationDelegate, UITextFieldDelegate, UIAlertViewDelegate>
+@interface MSQWebViewController () <WKNavigationDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) UITextField *urlField;
 @property (nonatomic, strong) UIButton *stopButton;
@@ -187,8 +186,7 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
 
 - (void)resetBrowser
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reset Browser?" message:@"Are you sure you want to reset the browser? Your current page, cookies, cache, and browsing history will all be lost." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Reset", nil];
-    [alert show];
+    [[MSQResetManager sharedManager] requestReset];
 }
 
 - (void)share
@@ -199,16 +197,6 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
 - (void)helpWithPassword
 {
     [MSQPasswordManager requestPasswordForURL:self.webView.URL];
-}
-
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex != alertView.cancelButtonIndex) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:MSQResetBrowserNotification object:self];
-    }
 }
 
 
