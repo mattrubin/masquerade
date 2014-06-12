@@ -17,6 +17,7 @@
 @property (nonatomic, weak) id<MSQURLFieldDelegate> delegate;
 
 @property (nonatomic, getter=isLoading) BOOL loading;
+@property (nonatomic) double percentLoaded;
 @property (nonatomic, copy) NSString *text;
 
 @end

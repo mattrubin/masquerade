@@ -19,6 +19,7 @@ static NSString * const DEFAULT_SCHEME = @"http";
 
 static NSString * const kURLKeyPath = @"webView.URL";
 static NSString * const kLoadingKeyPath = @"webView.loading";
+static NSString * const kEstimatedProgressKeyPath = @"webView.estimatedProgress";
 
 
 @interface MSQWebViewController () <WKNavigationDelegate, MSQURLFieldDelegate>
@@ -48,6 +49,7 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
 
         [self addObserver:self forKeyPath:kURLKeyPath options:0 context:nil];
         [self addObserver:self forKeyPath:kLoadingKeyPath options:0 context:nil];
+        [self addObserver:self forKeyPath:kEstimatedProgressKeyPath options:0 context:nil];
     }
     return self;
 }
@@ -60,6 +62,8 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
         self.passwordButtonItem.enabled = !!self.webView.URL.absoluteString.length;
     } else if ([keyPath isEqualToString:kLoadingKeyPath]) {
         self.urlField.loading = self.webView.isLoading;
+    } else if ([keyPath isEqualToString:kEstimatedProgressKeyPath]) {
+        self.urlField.percentLoaded = self.webView.estimatedProgress;
     }
 }
 
@@ -67,6 +71,7 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
 {
     [self removeObserver:self forKeyPath:kURLKeyPath];
     [self removeObserver:self forKeyPath:kLoadingKeyPath];
+    [self removeObserver:self forKeyPath:kEstimatedProgressKeyPath];
 }
 
 
@@ -76,6 +81,7 @@ static NSString * const kLoadingKeyPath = @"webView.loading";
 {
     self.webView = [WKWebView new];
     self.webView.navigationDelegate = self;
+    self.webView.allowsBackForwardNavigationGestures = YES;
     self.view = self.webView;
 }
 

@@ -14,6 +14,7 @@
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) UIButton *stopButton;
 @property (nonatomic, strong) UIButton *reloadButton;
+@property (nonatomic, strong) UIProgressView *progressBar;
 
 @end
 
@@ -47,6 +48,9 @@
         [self.reloadButton setTitle:@"↻" forState:UIControlStateNormal];
         [self.reloadButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
         [self.reloadButton addTarget:self action:@selector(reload:) forControlEvents:UIControlEventTouchUpInside];
+
+        self.progressBar = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+        [self addSubview:self.progressBar];
     }
     return self;
 }
@@ -56,6 +60,13 @@
     [super layoutSubviews];
 
     self.textField.frame = self.bounds;
+
+    [self.progressBar sizeToFit];
+    CGRect progressFrame = self.progressBar.frame;
+    progressFrame.size.width = CGRectGetWidth(self.bounds);
+    progressFrame.origin.x = CGRectGetMinX(self.bounds);
+    progressFrame.origin.y = CGRectGetMaxY(self.bounds) - CGRectGetHeight(progressFrame);
+    self.progressBar.frame = progressFrame;
 }
 
 - (BOOL)becomeFirstResponder
@@ -70,9 +81,15 @@
 {
     _loading = loading;
 
-    // TODO: Animated loading bar with webView.estimatedProgress
-    self.textField.backgroundColor = _loading ? self.tintColor : [UIColor whiteColor];
+    self.progressBar.hidden = !_loading;
     self.textField.rightView = _loading ? self.stopButton : self.reloadButton;
+}
+
+- (void)setPercentLoaded:(double)percentLoaded
+{
+    _percentLoaded = percentLoaded;
+
+    self.progressBar.progress = (float)_percentLoaded;
 }
 
 - (NSString *)text
