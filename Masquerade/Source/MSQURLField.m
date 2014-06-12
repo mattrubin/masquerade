@@ -11,7 +11,7 @@
 
 @interface MSQURLField () <UITextFieldDelegate>
 
-@property (nonatomic, strong) UITextField *urlField;
+@property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) UIButton *stopButton;
 @property (nonatomic, strong) UIButton *reloadButton;
 
@@ -24,20 +24,19 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Set up navigation bar
-        self.urlField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 300, 35)];
-        self.urlField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-        self.urlField.borderStyle = UITextBorderStyleRoundedRect;
-        self.urlField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        self.urlField.autocorrectionType = UITextAutocorrectionTypeNo;
-        self.urlField.spellCheckingType = UITextSpellCheckingTypeNo;
-        self.urlField.keyboardType = UIKeyboardTypeWebSearch;
-        self.urlField.returnKeyType = UIReturnKeyGo;
-        self.urlField.enablesReturnKeyAutomatically = YES;
-        self.urlField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        self.urlField.rightViewMode = UITextFieldViewModeUnlessEditing;
-        self.urlField.delegate = self;
-        [self addSubview:self.urlField];
+        self.textField = [UITextField new];
+        self.textField.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        self.textField.borderStyle = UITextBorderStyleRoundedRect;
+        self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+        self.textField.spellCheckingType = UITextSpellCheckingTypeNo;
+        self.textField.keyboardType = UIKeyboardTypeWebSearch;
+        self.textField.returnKeyType = UIReturnKeyGo;
+        self.textField.enablesReturnKeyAutomatically = YES;
+        self.textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        self.textField.rightViewMode = UITextFieldViewModeUnlessEditing;
+        self.textField.delegate = self;
+        [self addSubview:self.textField];
 
         self.stopButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
         [self.stopButton setTitle:@"✖︎" forState:UIControlStateNormal];
@@ -52,23 +51,32 @@
     return self;
 }
 
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+
+    self.textField.frame = self.bounds;
+}
+
+#pragma mark - Properties
+
 - (void)setLoading:(BOOL)loading
 {
     _loading = loading;
 
     // TODO: Animated loading bar with webView.estimatedProgress
-    self.urlField.backgroundColor = _loading ? self.tintColor : [UIColor whiteColor];
-    self.urlField.rightView = _loading ? self.stopButton : self.reloadButton;
+    self.textField.backgroundColor = _loading ? self.tintColor : [UIColor whiteColor];
+    self.textField.rightView = _loading ? self.stopButton : self.reloadButton;
 }
 
 - (NSString *)text
 {
-    return self.urlField.text;
+    return self.textField.text;
 }
 
 - (void)setText:(NSString *)text
 {
-    self.urlField.text = text;
+    self.textField.text = text;
 }
 
 
