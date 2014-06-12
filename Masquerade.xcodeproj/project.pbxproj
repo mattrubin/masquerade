@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C9290C3519482528008AE4DE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9290C3419482528008AE4DE /* WebKit.framework */; };
+		C9290C3819492CC2008AE4DE /* MSQSharingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C9290C3719492CC2008AE4DE /* MSQSharingManager.m */; };
 		C96B153C1925EAE4005F90A6 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C96B153B1925EAE4005F90A6 /* AddressBook.framework */; };
 		C96B153E1925EAEE005F90A6 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C96B153D1925EAEE005F90A6 /* MediaPlayer.framework */; };
 		C96B15401925EB02005F90A6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C96B153F1925EB02005F90A6 /* CoreLocation.framework */; };
@@ -34,6 +35,8 @@
 		36E369D53215495595EF7568 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		7BA615D54F0B4158B1AC6462 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9290C3419482528008AE4DE /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		C9290C3619492CC2008AE4DE /* MSQSharingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSQSharingManager.h; sourceTree = "<group>"; };
+		C9290C3719492CC2008AE4DE /* MSQSharingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSQSharingManager.m; sourceTree = "<group>"; };
 		C96B153B1925EAE4005F90A6 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		C96B153D1925EAEE005F90A6 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		C96B153F1925EB02005F90A6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -166,6 +169,8 @@
 				C9C571AC191EE8A0009FDB2E /* MSQWebViewController.m */,
 				C9C67309192311A7000AE47C /* MSQURLInterpreter.h */,
 				C9C6730A192311A7000AE47C /* MSQURLInterpreter.m */,
+				C9290C3619492CC2008AE4DE /* MSQSharingManager.h */,
+				C9290C3719492CC2008AE4DE /* MSQSharingManager.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -324,6 +329,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9C571AD191EE8A0009FDB2E /* MSQWebViewController.m in Sources */,
+				C9290C3819492CC2008AE4DE /* MSQSharingManager.m in Sources */,
 				C9B93222191EB9380046FF02 /* MSQAppDelegate.m in Sources */,
 				C9C6730B192311A7000AE47C /* MSQURLInterpreter.m in Sources */,
 				C9B9321E191EB9380046FF02 /* main.m in Sources */,
