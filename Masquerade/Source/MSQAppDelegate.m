@@ -8,9 +8,10 @@
 
 #import "MSQAppDelegate.h"
 #import "MSQWebViewController.h"
+#import "MSQResetManager.h"
 
 
-@interface MSQAppDelegate ()
+@interface MSQAppDelegate () <MSQResetManagerDelegate>
 
 @property (nonatomic, strong) UIViewController *rootViewController;
 @property (nonatomic, strong) UIViewController *maskViewController;
@@ -26,10 +27,11 @@
     // Override point for customization after application launch.
 
     // Listen for broswer reset
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetBrowser) name:MSQResetBrowserNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:[MSQResetManager sharedManager] selector:@selector(resetBrowser) name:MSQResetBrowserNotification object:nil];
 
     // Set up the browser (ensuring we blow away any old session data left by mistake)
-    [self resetBrowser];
+    [MSQResetManager sharedManager].delegate = self;
+    [[MSQResetManager sharedManager] resetBrowser];
 
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -67,93 +69,24 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 
-    [self resetBrowser];
+    [[MSQResetManager sharedManager] resetBrowser];
 }
 
 
-#pragma mark - Reset
+#pragma mark - MSQResetManagerDelegate
 
-- (void)resetBrowser
+- (void)terminateSession
 {
     // Destroy any browsing session in progress
     self.rootViewController = nil;
     self.window.rootViewController = nil;
+}
 
-    // Delete all cookies
-    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    NSArray *cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies;
-    for (NSHTTPCookie *cookie in cookies) {
-        [cookieStorage deleteCookie:cookie];
-    }
-
-    // Clear the cache
-    [[NSURLCache sharedURLCache] removeAllCachedResponses];
-
-    // Wipe the Caches, Cookies, and Preferences directories
-    NSArray *URLs = [[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask];
-    for (NSURL *libraryURL in URLs) {
-        NSURL *cachesURL = [libraryURL URLByAppendingPathComponent:@"Caches" isDirectory:YES];
-        [self purgeDirectoryAtURL:cachesURL];
-
-        NSURL *cookiesURL = [libraryURL URLByAppendingPathComponent:@"Cookies" isDirectory:YES];
-        [self purgeDirectoryAtURL:cookiesURL];
-
-        NSURL *preferencesURL = [libraryURL URLByAppendingPathComponent:@"Preferences" isDirectory:YES];
-        [self purgeDirectoryAtURL:preferencesURL];
-    }
-
+- (void)beginSession
+{
     // Start a new browsing session
     self.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MSQWebViewController new]];
     self.window.rootViewController = self.rootViewController;
-}
-
-- (BOOL)deleteDirectoryAtURL:(NSURL *)directoryURL
-{
-    NSError *error;
-    BOOL success = [[NSFileManager defaultManager] removeItemAtURL:directoryURL error:&error];
-
-    if (error) {
-        NSError *underlyingError = error.userInfo[NSUnderlyingErrorKey];
-        if ([underlyingError.domain isEqualToString:NSPOSIXErrorDomain]) {
-            switch (underlyingError.code) {
-                case 1: // Operation not permitted
-                    return [self purgeDirectoryAtURL:directoryURL];
-                case 2: // No such file or directory
-                    return YES; // Failing to delete a nonexistent directory is a kind of success
-                default:
-                    break;
-            }
-        }
-        NSLog(@"ERROR: %@", error);
-        NSLog(@"UNDERLYING ERROR: %@", underlyingError);
-    }
-
-    return success;
-}
-
-- (BOOL)purgeDirectoryAtURL:(NSURL *)directoryURL
-{
-    NSError *error;
-    NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:directoryURL
-                                                      includingPropertiesForKeys:nil
-                                                                         options:0
-                                                                           error:&error];
-    if (error) {
-        NSLog(@"ERROR PURGING DIRECTORY: %@", directoryURL);
-        NSLog(@"ERROR: %@", error);
-        return NO;
-    }
-
-    BOOL failed = NO;
-    for (NSURL *childURL in contents) {
-        BOOL success = [self deleteDirectoryAtURL:childURL];
-        if (!success) {
-            NSLog(@"FAILED TO DELETE: %@", childURL);
-            failed = YES;
-        }
-    }
-
-    return !failed;
 }
 
 @end
