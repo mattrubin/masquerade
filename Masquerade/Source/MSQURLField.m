@@ -84,12 +84,14 @@
 
 - (IBAction)stopLoading:(id)sender
 {
-    [self.delegate stopLoadingFromURLField:self];
+    id<MSQURLFieldDelegate> delegate = self.delegate;
+    [delegate stopLoadingFromURLField:self];
 }
 
 - (IBAction)reload:(id)sender
 {
-    [self.delegate reloadFromURLField:self];
+    id<MSQURLFieldDelegate> delegate = self.delegate;
+    [delegate reloadFromURLField:self];
 }
 
 
@@ -97,11 +99,11 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self.delegate urlField:self didEnterText:textField.text];
+    id<MSQURLFieldDelegate> delegate = self.delegate;
+    [delegate urlField:self didEnterText:textField.text];
 
     [textField resignFirstResponder];
     return NO;
 }
-
 
 @end

@@ -43,7 +43,8 @@
 - (void)resetBrowser
 {
     // Destroy any browsing session in progress
-    [self.delegate terminateSession];
+    id<MSQResetManagerDelegate> delegate = self.delegate;
+    [delegate terminateSession];
 
     // Delete all cookies
     NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
@@ -69,7 +70,7 @@
     }
 
     // Start a new browsing session
-    [self.delegate beginSession];
+    [delegate beginSession];
 }
 
 - (BOOL)deleteDirectoryAtURL:(NSURL *)directoryURL
